@@ -63,7 +63,7 @@ sub update-spotify-title($file-name, $song-title) {
 sub MAIN($output-file-path, $loop = False, $interval-seconds = 5) {
 
 	if $loop {
-		say "INFO: Running spotify-title at a $interval-seconds second interval.";
+		say "INFO: running spotify-title at a $interval-seconds second interval.";
 		while $loop {
 			my $spotify-title = get-spotify-title;
 			update-spotify-title $output-file-path, $spotify-title;
