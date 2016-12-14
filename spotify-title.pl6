@@ -54,13 +54,23 @@ sub update-spotify-title($file-name, $song-title) {
 	}
 
 	if $data !eq $song-title {
-		spurt $file-name, "Now Playing: $song-title";
+		spurt $file-name, $song-title;
 		say "INFO: title changed from file contents, writing!"
 	}
 
 }
 
-sub MAIN($output-file-path) {
-	my $spotify-title = get-spotify-title;
-	update-spotify-title $output-file-path, $spotify-title;
+sub MAIN($output-file-path, $loop = False, $interval-seconds = 5) {
+
+	if $loop {
+		say "INFO: Running spotify-title at a $interval-seconds second interval.";
+		while $loop {
+			my $spotify-title = get-spotify-title;
+			update-spotify-title $output-file-path, $spotify-title;
+		}
+	} else {
+		my $spotify-title = get-spotify-title;
+		update-spotify-title $output-file-path, $spotify-title;
+	}
+
 }
