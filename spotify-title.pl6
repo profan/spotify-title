@@ -3,9 +3,10 @@
 my $spotify-pid =  q:x/ps xf | grep "spotify" | head -n 1 | awk '{print $1}'/.trim;
 my $window-titles = q:x/wmctrl -lp/;
 
+my $pid-and-title-regex = /\S+ \s+ \d+ \s+ $<pid> = [\d*] \s+ \S+ \s+ $<title> = [.*]/;
+
 sub get-spotify-title {
 
-	my $pid-and-title-regex = /\S+ \s+ \d+ \s+ $<pid> = [\d*] \s+ \S+ \s+ $<title> = [.*]/;
 	my @spotify-titles = gather for $window-titles.lines {
 		given $_ {
 			when $pid-and-title-regex and $<pid> == $spotify-pid {
@@ -31,7 +32,7 @@ sub update-spotify-title($file-name, $song-title) {
 	}
 
 	if $data !eq $song-title {
-		spurt $file-name, $song-title;
+		spurt $file-name, "Now Playing: $song-title";
 		say "INFO: title changed from file contents, writing!"
 	}
 
