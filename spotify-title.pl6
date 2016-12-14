@@ -1,3 +1,5 @@
+#!/usr/bin/env perl6
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2016 Robin Hübner <profan@prfn.se>
@@ -19,8 +21,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-#!/usr/bin/env perl6
 
 my $spotify-pid =  q:x/ps xf | grep "spotify" | head -n 1 | awk '{print $1}'/.trim;
 my $window-titles = q:x/wmctrl -lp/;
