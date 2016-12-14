@@ -60,7 +60,7 @@ sub update-spotify-title($file-name, $song-title) {
 
 }
 
-sub MAIN($output-file-path, $loop = False, $interval-seconds = 5) {
+sub MAIN(Str $output-file-path, Bool :$loop = False, Int :$interval-seconds = 5) {
 
 	if $loop {
 		say "INFO: running spotify-title at a $interval-seconds second interval.";
