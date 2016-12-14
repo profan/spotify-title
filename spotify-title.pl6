@@ -50,7 +50,7 @@ sub get-spotify-title {
 
 }
 
-sub update-spotify-title($file-name, $song-title) {
+sub update-spotify-title($file-name, $song-title, $debug) {
 
 	my $data = do if $file-name.IO.e {
 		slurp $file-name;
@@ -60,18 +60,18 @@ sub update-spotify-title($file-name, $song-title) {
 
 	if $data !eq $song-title {
 		spurt $file-name, $song-title;
-		say "INFO: title changed from file contents, writing!"
+		say "INFO: title changed from file contents, writing!" if $debug;
 	}
 
 }
 
-sub MAIN(Str $output-file-path, Bool :$loop = False, Int :$interval-seconds = 5) {
+sub MAIN(Str $output-file-path, Bool :$loop = False, Int :$interval-seconds = 5, :$debug = False) {
 
 	if $loop {
-		say "INFO: running spotify-title at a $interval-seconds second interval.";
+		say "INFO: running spotify-title at a $interval-seconds second interval." if $debug;
 		while $loop {
 			my $spotify-title = get-spotify-title;
-			update-spotify-title $output-file-path, $spotify-title;
+			update-spotify-title $output-file-path, $spotify-title, $debug;
 			sleep $interval-seconds;
 		}
 	} else {
