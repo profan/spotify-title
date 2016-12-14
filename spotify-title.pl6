@@ -22,12 +22,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-my $spotify-pid =  q:x/ps xf | grep "spotify" | head -n 1 | awk '{print $1}'/.trim;
-my $window-titles = q:x/wmctrl -lp/;
-
 my $pid-and-title-regex = /\S+ \s+ \d+ \s+ $<pid> = [\d*] \s+ \S+ \s+ $<title> = [.*]/;
 
 sub get-spotify-title {
+
+	my $spotify-pid =  q:x/ps xf | grep "spotify" | head -n 1 | awk '{print $1}'/.trim;
+	my $window-titles = q:x/wmctrl -lp/;
 
 	my @spotify-titles = gather for $window-titles.lines {
 		given $_ {
@@ -67,6 +67,7 @@ sub MAIN(Str $output-file-path, Bool :$loop = False, Int :$interval-seconds = 5)
 		while $loop {
 			my $spotify-title = get-spotify-title;
 			update-spotify-title $output-file-path, $spotify-title;
+			sleep $interval-seconds;
 		}
 	} else {
 		my $spotify-title = get-spotify-title;
