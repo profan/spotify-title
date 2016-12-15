@@ -30,10 +30,8 @@ sub get-spotify-title {
 	my $window-titles = q:x/wmctrl -lp/;
 
 	my @spotify-titles = gather for $window-titles.lines {
-		given $_ {
-			when $pid-and-title-regex and $<pid> == $spotify-pid {
-				take $<title>.Str;
-			}
+		when $pid-and-title-regex and $<pid> == $spotify-pid {
+			take $<title>.Str;
 		}
 	}
 
