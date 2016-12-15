@@ -40,7 +40,7 @@ sub get-spotify-title {
 	if @spotify-titles.elems == 0 {
 		"spotify not running!"
 	} else {
-		my $title = @spotify-titles[0];
+		my $title = @spotify-titles.first;
 		if $title eq "Spotify" {
 			"nothing playing."
 		} else {
